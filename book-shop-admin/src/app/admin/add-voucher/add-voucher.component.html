@@ -1,0 +1,81 @@
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h2 class="modal-title m-0">Thêm khuyến mại</h2>
+<!--    <div>{{postForm.value | json}}</div>-->
+  </div>
+  <div class="modal-body p-4">
+    <form [formGroup]="postForm" class="row">
+      <input type="hidden" formControlName='voucherId'>
+      <input type="hidden" formControlName="status">
+      <div class="form-group col-6">
+        <label for="name">Tên khuyến mại</label>
+        <input type="text" id="name"
+               [ngClass]="{'is-invalid':postForm.get('name')?.touched && postForm.get('name')?.invalid}"
+               class="form-control" formControlName="name">
+        <small class="invalid-feedback">Tên khuyến mại không hợp lệ</small>
+      </div>
+      <div class="form-group col-6">
+        <label for="discountPercent">Khuyến mại</label>
+        <div class="input-group">
+          <input type="number" id="discountPercent"
+                 [ngClass]="{'is-invalid':postForm.get('discountPercent')?.touched && postForm.get('discountPercent')?.invalid}"
+                 class="form-control" formControlName="discountPercent">
+          <div class="input-group-append">
+            <span class="input-group-text" id="basic-addon2-voucher">%</span>
+          </div>
+          <small class="invalid-feedback">Khuyến mại không hợp lệ</small>
+        </div>
+      </div>
+      <div class="form-group col-6">
+        <label>Khuyến mại theo</label><br>
+        <input type="radio" id="categoryOption" name="option" (click)="selectOption('category')" checked>
+        <label for="categoryOption" class="btn btn-primary" style="margin-right: 10px;">Danh mục</label>
+        <input type="radio" id="productOption" name="option" (click)="selectOption('product')">
+        <label for="productOption" class="btn btn-secondary">Sản phẩm</label>
+      </div>
+
+      <div class="col-6 p-0" *ngIf="selectedOption === 'category'">
+        <div class="form-group col-12">
+          <label for="category">Loại hàng</label>
+          <select class="custom-select" id="category" formControlName="categoryId">
+            <option *ngFor="let item of categories" [value]="item.categoryId"
+                    [ngClass]="{'is-invalid':postForm.get('categoryId')?.touched && postForm.get('categoryId')?.invalid}"
+            >{{ item.categoryName }}
+            </option>
+          </select>
+          <small class="invalid-feedback">Không được để trống loại danh mục</small>
+        </div>
+      </div>
+      <div class="col-6 p-0" *ngIf="selectedOption === 'product'">
+        <div class="form-group col-12">
+          <label for="product">Loại sản phẩm</label>
+          <select class="custom-select" id="product" formControlName="productId">
+            <option *ngFor="let item of products" [value]="item.productId"
+                    [ngClass]="{'is-invalid':postForm.get('productId')?.touched && postForm.get('productId')?.invalid}"
+            >{{ item.name }}
+            </option>
+          </select>
+        </div>
+        <small class="invalid-feedback">Không được để sản phẩm</small>
+      </div>
+      <div class="form-group col-6">
+        <label class="form-label">Ngày bắt đầu</label>
+        <input type="date" class="form-control" formControlName="startDate">
+      </div>
+      <div class="form-group col-6">
+        <label class="form-label">Ngày kết thúc</label>
+        <input type="date" class="form-control" formControlName="endDate">
+      </div>
+      <div class="form-group col-6">
+        <label for="description">Mô tả</label>
+        <input type="text" id="description"
+               class="form-control" formControlName="description"
+               [ngClass]="{'is-invalid':postForm.get('description')?.touched && postForm.get('description')?.invalid}">
+        <small class="invalid-feedback">Mô tả sản phẩm không được để trống </small>
+      </div>
+      <button mat-raised-button color="primary" class="col-2 m-3" [disabled]="postForm?.invalid" (click)="save()">Thêm
+      </button>
+    </form>
+  </div>
+</ng-template>
+<button mat-raised-button color="primary" (click)="open(content)">Thêm khuyến mại</button>

@@ -1,0 +1,28 @@
+<section id="news" class="section-p1">
+  <div class="container">
+    <div class="row">
+      <div *ngFor="let item of news; let i = index" class="col-12 col-md-6 col-lg-6 col-xl-4">
+        <div class="item-news">
+          <div class="block-thumb">
+            <a class="thumb" [href]="getNewsDetailUrl(item.id)" title="{{ item.title }}">
+              <img width="512" height="385" class="lazyload loaded" [src]="getClasspathUrl(item.avatar)" alt="{{ item.title }}">
+            </a>
+            <div class="info">
+              <h3>
+                <a class="line-clamp line-clamp-1" [href]="getNewsDetailUrl(item.id)" title="{{ item.title }}">
+                  {{ item.title }}
+                </a>
+              </h3>
+              <p class="justify line-clamp line-clamp-3">{{ item.summary }}</p>
+              <a class="see" [href]="getNewsDetailUrl(item.id)" title="Xem thêm">
+                <span><i class="bi bi-plus-lg"></i></span>
+                Xem thêm
+              </a>
+            </div>
+            <div class="time-post">{{ formatDate(item.createDate) }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
